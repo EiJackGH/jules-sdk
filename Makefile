@@ -4,18 +4,20 @@
 
 # Compiler and Flags
 CXX      := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -Iinclude
+INC_DIR  := include
+CXXFLAGS := -std=c++17 -Wall -Wextra -I$(INC_DIR)
 LDFLAGS  := -Llib
 LDLIBS   := -lm
 
 # Directories
-SRC_DIR  := src
-OBJ_DIR  := obj
-BIN_DIR  := bin
-INC_DIR  := include
+SRC_DIR     := src
+OBJ_DIR     := obj
+BIN_DIR     := bin
+EXAMPLE_DIR := examples
 
 # Target Name
 TARGET   := $(BIN_DIR)/libjules_sdk.a
+TEST_APP := $(BIN_DIR)/test_app
 
 # Find all source files and map them to object files
 SRCS     := $(wildcard $(SRC_DIR)/*.cpp)
@@ -23,9 +25,11 @@ OBJS     := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
 # --- Rules ---
 
-.PHONY: all clean install directories
+.PHONY: all clean install directories examples
 
 all: directories $(TARGET)
+
+examples: $(TEST_APP)
 
 # Create a static library (Common for SDKs)
 $(TARGET): $(OBJS)
@@ -35,6 +39,11 @@ $(TARGET): $(OBJS)
 # Compile source files into objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compile example application
+$(TEST_APP): $(EXAMPLE_DIR)/test_app.cpp $(TARGET)
+	$(CXX) $(CXXFLAGS) $< -o $@ $(TARGET)
+	@echo "Successfully built Test Application: $@"
 
 # Create necessary directories
 directories:
