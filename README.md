@@ -15,6 +15,6 @@
 
 ## 🛠️ Installation
 ```bash
-git clone [https://github.com/EiJackGH/Jules-SDK.git](https://github.com/EiJackGH/Jules-SDK.git)
+git clone https://github.com/EiJackGH/Jules-SDK.git
 cd Jules-SDK
 make install
