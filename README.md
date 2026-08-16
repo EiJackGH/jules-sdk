@@ -18,3 +18,25 @@
 git clone https://github.com/EiJackGH/Jules-SDK.git
 cd Jules-SDK
 make install
+```
+
+## 📖 Usage
+To build the SDK and the example application:
+```bash
+make
+make examples
+./bin/test_app
+```
+
+### Basic Example
+```cpp
+#include "jules_sdk.h"
+
+int main() {
+    jules::SDK sdk;
+    sdk.initialize();
+    sdk.log("Hello, Jules SDK!");
+    sdk.shutdown();
+    return 0;
+}
+```
